@@ -13,18 +13,21 @@ public class FootCollider : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () 
+	{
+		_JumpScript._Grounded = false;
+		transform.parent.SetParent (null);
 	}
 
 	void OnTriggerStay(Collider _Coll)
 	{
 		_JumpScript._Grounded = true;
+		transform.parent.SetParent (_Coll.transform);
 	}
 
 	void OnTriggerExit(Collider _Coll)
 	{
-		_JumpScript._Grounded = false;
+		//_JumpScript._Grounded = false;
 	}
 
 

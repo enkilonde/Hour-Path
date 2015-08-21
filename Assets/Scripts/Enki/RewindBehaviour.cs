@@ -19,7 +19,7 @@ public class RewindBehaviour : MonoBehaviour {
 	{
 		if (_ObjectHit) 
 		{
-			_ObjectHit.GetComponent<TimeManager>()._BackInTime = false;
+			//_ObjectHit.GetComponent<TimeManager>()._BackInTime = false;
 		}
 		RaycastHit _Hit;
 		Ray _Ray = Camera.main.ViewportPointToRay (new Vector3(0.5f, 0.5f, 0));
@@ -29,13 +29,23 @@ public class RewindBehaviour : MonoBehaviour {
 
 			if (_Hit.collider.gameObject.tag == "Rewindable")
 			{
-				_ObjectHit = _Hit.collider.gameObject;
-				if (Input.GetButton("RemindTarget"))
+				if (!Input.GetButton("RemindTarget"))
 				{
-					_ObjectHit.GetComponent<TimeManager>()._BackInTime = true;
+					_ObjectHit = _Hit.collider.gameObject;
+				}
+
+				if (Input.GetButtonDown("RemindTarget"))
+				{
+					_Hit.collider.gameObject.GetComponent<TimeManager>()._BackInTime = true;
 				}
 
 			}
+		}
+
+
+		if (Input.GetButtonUp ("RemindTarget") && _ObjectHit) 
+		{
+			_ObjectHit.GetComponent<TimeManager>()._BackInTime = false;
 		}
 
 

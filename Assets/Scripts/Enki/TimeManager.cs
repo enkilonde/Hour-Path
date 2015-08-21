@@ -24,10 +24,11 @@ public class TimeManager : MonoBehaviour {
 	public List<ObjectTransform> _PreviousTransform = new List<ObjectTransform>();
 	
 	public int _StockingCapacity = 50;
-	public float _StockingFrequency = 0.5f;
+	public int _StockingFrequency = 1;
 	
-	public float _BackTimeSpeed = 1;
+	public int _BackTimeSpeed = 1;
 
+	[HideInInspector]
 	public bool _BackInTime = false;
 
 	
@@ -44,12 +45,16 @@ public class TimeManager : MonoBehaviour {
 		
 	}
 	
-	
+	//On stock les position de l'objet dans une liste
 	IEnumerator StockageTime()
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(_StockingFrequency);
+			//yield return new WaitForSeconds(_StockingFrequency);
+
+			for (int i = 0; i < _StockingFrequency; i++) {
+				yield return null;
+			}
 
 			if (!_BackInTime)
 			{
@@ -64,12 +69,17 @@ public class TimeManager : MonoBehaviour {
 		}
 	}
 
-
+	//on rewind
 	IEnumerator Rewinding()
 	{
 		while (true) 
 		{
-			yield return new WaitForSeconds(_BackTimeSpeed);
+			//yield return new WaitForSeconds(_BackTimeSpeed);
+
+			for (int i = 0; i < _BackTimeSpeed; i++) {
+				yield return null;
+			}
+
 
 			if (_BackInTime && _PreviousTransform.Count > 0)
 			{
